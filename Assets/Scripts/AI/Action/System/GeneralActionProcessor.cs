@@ -34,7 +34,7 @@ public class GeneralActionProcessor : ComponentSystem
             // TEST: Is method in the struct really works?
             c0.ActionStatus = ActionStatus.Completed;
             EntityManager.RemoveComponent(entity, c0.CurrentActionTag);
-            c0.Reset();
+            c0 = new ActionData();
         }
     }
     // SetActionTag At last, so give other system a frame to StartAction

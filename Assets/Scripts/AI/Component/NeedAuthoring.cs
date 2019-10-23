@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
@@ -7,8 +8,14 @@ using Sirenix.OdinInspector;
 public struct Need : IBufferElementData
 {
     public NeedType Type;
-    public int Urgency;
+    private int urgency;
     public int AddPerSecond;
+
+    public int Urgency
+    {
+        get => urgency; 
+        set => urgency = math.clamp(value, 0, 100);
+    }
 }
 
 public enum NeedType

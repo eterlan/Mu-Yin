@@ -8,10 +8,12 @@ public struct ActionData : IComponentData
     public ComponentType CurrentActionTag;
     public ActionStatus ActionStatus;
     public float StartTime;
+    public float ActionStartTime;
     public float HighestScore;
     public void Reset()
     {
         StartTime = 0;
+        ActionStartTime = 0;
         HighestScore = 0;
     }
 }
