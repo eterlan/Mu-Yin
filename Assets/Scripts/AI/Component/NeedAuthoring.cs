@@ -8,7 +8,7 @@ using Sirenix.OdinInspector;
 public struct Need : IBufferElementData
 {
     public NeedType Type;
-    private int urgency;
+    public int urgency;
     public int AddPerSecond;
 
     public int Urgency
