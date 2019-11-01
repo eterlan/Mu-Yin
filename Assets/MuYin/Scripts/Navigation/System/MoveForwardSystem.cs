@@ -1,44 +1,71 @@
+using MuYin.AI.Components.FSM;
 using MuYin.Navigation.Component;
+using Unity.Collections;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
 namespace MuYin.Navigation.System
 {
-    public class MoveForwardSystem : ComponentSystem
+    //Todo: Maybe I should AccelerationSystem to handle player keyboard input.
+    public class MoveForwardSystem : JobComponentSystem
     {
-        protected override void OnUpdate()
+        private EndSimulationEntityCommandBufferSystem m_endEcbSystem;
+        //private EntityQuery m_movementGroup;
+        
+        [RequireComponentTag(typeof(InNavigation))]
+        private struct MoveForward : IJobForEachWithEntity<LocalToWorld, Translation, MotionData, MotionInfo>
         {
-            Entities.ForEach((ref LocalToWorld d0, ref Translation d1, ref MotionData d2, ref MotionInfo d3) =>
+            public float DeltaTime;
+            public EntityCommandBuffer.Concurrent EndEcb;
+            public void Execute
+            (
+                Entity actor,
+                int index,
+                [ReadOnly]ref LocalToWorld c0,
+                ref Translation  c1,
+                ref MotionData   c2,
+                [ReadOnly]ref MotionInfo   c3)
             {
-                if (d3.NavigateStatus != NavigateStatus.Navigating) return;
-            
-                var distance = math.distance(d3.TargetPosition, d1.Value);
-
-                // Why not go into branch?
-                //Debug.Log(+distance);
-
-                if (distance < d2.BreakDistance)
+                var distance = math.distance(c3.TargetPosition, c1.Value);
+                
+                if (distance < c2.BreakDistance)
                 {
-                    d3.NavigateStatus = NavigateStatus.Arrived;
+                    EndEcb.RemoveComponent<InNavigation>(index, actor);
+                    EndEcb.AddComponent<OnArrived>(index, actor);
                     //Debug.Log(d3.Status+""+distance);
 
                     return;
                 }
 
-                var toSpeed = distance < d2.DecelerationDistance
+                var toSpeed = distance < c2.DecelerationDistance
                     ? 0f 
-                    : d2.MaxSpeed;
+                    : c2.MaxSpeed;
             
-                d2.Speed =  math.lerp(d2.Speed, toSpeed, d2.LerpSpeed);
-                d1.Value += d0.Forward * d2.Speed * Time.deltaTime;
-            });
+                c2.Speed =  math.lerp(c2.Speed, toSpeed, c2.LerpSpeed);
+                c1.Value += c0.Forward * c2.Speed * DeltaTime;
+            }
+        }
+        
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        {
+            return new MoveForward
+            {
+                DeltaTime = Time.deltaTime,
+                EndEcb = m_endEcbSystem.CreateCommandBuffer().ToConcurrent()
+            }.Schedule(this, inputDeps);
         }
 
-        protected override void OnCreate() { }
+        protected override void OnCreate()
+        {
+            m_endEcbSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        }
 
         protected override void OnDestroy() { }
+
+        
     }
 }
 

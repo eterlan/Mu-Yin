@@ -21,13 +21,13 @@ namespace MuYin.AI.Systems
                 if (time - m_updatePeriods[lv] < m_lastUpdateTime[lv]) continue;
 
                 m_lastUpdateTime[lv] = time;
-                inputDeps            = JobHandle.CombineDependencies(inputDeps, ScheduleJobs(lv));
+                inputDeps            = JobHandle.CombineDependencies(inputDeps, ScheduleJobs(lv, inputDeps));
             }
             
             return inputDeps;
         }
         
-        private JobHandle ScheduleJobs(int needLv)
+        private JobHandle ScheduleJobs(int needLv, JobHandle inputDeps)
         {
             var handles = new NativeList<JobHandle>(5, Allocator.TempJob);
             
@@ -44,7 +44,7 @@ namespace MuYin.AI.Systems
             
             void ScheduleLv1Jobs()
             {
-                handles.Add(new SleepConsiderJob().Schedule(this));
+                handles.Add(new SleepConsiderJob().Schedule(this,inputDeps));
             }
         }
 

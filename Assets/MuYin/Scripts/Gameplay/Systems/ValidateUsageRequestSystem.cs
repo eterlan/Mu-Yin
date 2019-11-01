@@ -9,16 +9,32 @@ using UnityEngine;
 
 namespace MuYin.Gameplay.Systems
 {
+    public enum ResultType{Invalid, Success, Fail}
+    public struct ValidateUsageRequest : IComponentData
+    {
+        public Entity UserEntity;
+        public Entity ObjectEntity;
+        public bool   IsForce;
+        public ResultType ResultType;
+    }
     public class ValidateUsageRequestSystem : ComponentSystem
     {
         protected override void OnUpdate()
         {
-            
-            return;
+            Entities.ForEach((ref ValidateUsageRequest request) =>
+            {
+                request.ResultType = UsageRequest(ref request) 
+                    ? ResultType.Success 
+                    : ResultType.Fail;
+            });
         }
 
-        public bool UsageRequest(Entity userEntity, Entity objectEntity, bool isForce)
+        private bool UsageRequest(ref ValidateUsageRequest request)
         {
+            var userEntity = request.UserEntity;
+            var objectEntity = request.ObjectEntity;
+            var isForce = request.IsForce;
+            
             var inUse = EntityManager.HasComponent<InUse>(objectEntity);
             // Todo: If it's mine & sb else using it, I would be angry.
             if (inUse) return false;

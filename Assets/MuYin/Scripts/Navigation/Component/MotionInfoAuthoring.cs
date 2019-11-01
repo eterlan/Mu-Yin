@@ -8,21 +8,15 @@ namespace MuYin.Navigation.Component
     [RequiresEntityConversion]
     public class MotionInfoAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
-        //public Transform Transform;
-        public NavigateStatus Status;
-        public NavigateType   NavigateType;
+        // Todo: Change to tag.
+        //public NavigateType   NavigateType;
     
         public void Convert
         (Entity                     entity,
          EntityManager              manager,
          GameObjectConversionSystem conversionSystem)
         {
-            var data = new MotionInfo
-            {
-                //Position = Transform.position,
-                NavigateStatus       = Status,
-                NavigateType = NavigateType,
-            };
+            var data = new MotionInfo();
 
             manager.AddComponentData(entity, data);
         }
@@ -31,8 +25,6 @@ namespace MuYin.Navigation.Component
     public struct MotionInfo : IComponentData
     {
         public float3         TargetPosition;
-        public NavigateStatus NavigateStatus;
-        public NavigateType   NavigateType;
         public Entity TargetEntity;
     }
 }

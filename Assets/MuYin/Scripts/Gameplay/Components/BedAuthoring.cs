@@ -5,7 +5,7 @@ namespace MuYin.Gameplay.Components
 {
     public struct Bed : IComponentData
     {
-        public int RestorationValue;
+        public int Restoration;
         public int SleepTime;
     }
     [RequireComponent(typeof(ConvertToEntity))]
@@ -19,7 +19,7 @@ namespace MuYin.Gameplay.Components
         {
             var data = new Bed
             {
-                RestorationValue = RestorationValue,
+                Restoration = RestorationValue,
                 // TODO: Set Editor.
                 SleepTime = SleepTime,
             };
