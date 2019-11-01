@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-namespace MuYin.AI.Consideration
+namespace MuYin.AI.Consideration.Interface
 {
     public interface IActionConsiderer
     {

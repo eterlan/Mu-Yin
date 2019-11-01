@@ -1,18 +1,18 @@
-using MuYin.Scripts.Navigation.Component;
+using MuYin.Navigation.Component;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-namespace MuYin.Scripts.Navigation.System
+namespace MuYin.Navigation.System
 {
     public class MoveForwardSystem : ComponentSystem
     {
         protected override void OnUpdate()
         {
-            Entities.ForEach((ref LocalToWorld d0, ref Translation d1, ref MotionData d2, ref MotionStatus d3) =>
+            Entities.ForEach((ref LocalToWorld d0, ref Translation d1, ref MotionData d2, ref MotionInfo d3) =>
             {
-                if (d3.Status != NavigateStatus.Navigating) return;
+                if (d3.NavigateStatus != NavigateStatus.Navigating) return;
             
                 var distance = math.distance(d3.TargetPosition, d1.Value);
 
@@ -21,7 +21,7 @@ namespace MuYin.Scripts.Navigation.System
 
                 if (distance < d2.BreakDistance)
                 {
-                    d3.Status = NavigateStatus.Arrived;
+                    d3.NavigateStatus = NavigateStatus.Arrived;
                     //Debug.Log(d3.Status+""+distance);
 
                     return;

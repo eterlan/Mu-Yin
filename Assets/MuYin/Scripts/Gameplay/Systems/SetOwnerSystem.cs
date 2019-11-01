@@ -72,7 +72,7 @@ namespace MuYin.Gameplay.Systems
             for (var index = 0; index < entities.Length; index++)
             {
                 var eventInfo = eventInfos[index];
-                eventInfo.IsValidate = Validate(eventInfo.ObjectEntity, ref eventInfo);
+                eventInfo.IsValidate = Validate(ref eventInfo);
 
                 EntityManager.SetComponentData(entities[index], eventInfo);
             }
@@ -91,22 +91,22 @@ namespace MuYin.Gameplay.Systems
             return inputDependency;
         }
 
-        private bool Validate(Entity objectEntity, ref SetPlaceOwnerEvent eventInfo)
+        private bool Validate(ref SetPlaceOwnerEvent eventInfo)
         {
+            var objectEntity = eventInfo.ObjectEntity;
             if (SameOwner(ref eventInfo))  return false;
         
             eventInfo.IsLegal = IsLegal();
             return eventInfo.IsForce || eventInfo.IsLegal;
-        
             
-            bool SameOwner(ref SetPlaceOwnerEvent eInfo)
+            bool SameOwner(ref SetPlaceOwnerEvent e)
             {
                 if (!EntityManager.HasComponent<Owner>(objectEntity)) return false;
             
-                eInfo.HasOwner = true;
+                e.HasOwner = true;
             
                 var ownerInfo = EntityManager.GetComponentData<Owner>(objectEntity);
-                if (ownerInfo.OwnerEntity != eInfo.OwnerEntity) return false;
+                if (ownerInfo.OwnerEntity != e.OwnerEntity) return false;
             
                 Debug.Log("He is already owner of this Object");
                 return true;

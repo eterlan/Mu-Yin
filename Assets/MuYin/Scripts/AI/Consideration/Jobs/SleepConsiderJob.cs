@@ -3,9 +3,9 @@ using Unity.Entities;
 
 namespace MuYin.AI.Consideration.Jobs
 {
-    public struct SleepConsiderJob : IJobForEach_BCC<Need, SleepConsiderer, ActionData>
+    public struct SleepConsiderJob : IJobForEach_BCC<Need, SleepConsiderer, ActionInfo>
     {
-        public void Execute(DynamicBuffer<Need> b0 , ref SleepConsiderer c0, ref ActionData actionData)
+        public void Execute(DynamicBuffer<Need> b0 , ref SleepConsiderer c0, ref ActionInfo actionInfo)
         {
             // 计算每个Consideration的得分再计算行为的总分（除以C个数）。
             var sleepness = b0[(int)NeedType.Sleepness].Urgency;
@@ -19,9 +19,9 @@ namespace MuYin.AI.Consideration.Jobs
             // 记录最高得分行为。
             // Todo: 把比较放到可复用的地方地方。
             // 可以把每级的considerComponent综合起来，做成几个compare job。
-            if (!(c0.Score > actionData.HighestScore)) return;
-            actionData.HighestScore = c0.Score;
-            actionData.HighestScoreActionTag    = c0.ActionTag;
+            if (!(c0.Score > actionInfo.HighestScore)) return;
+            actionInfo.HighestScore = c0.Score;
+            actionInfo.HighestScoreActionTag    = c0.ActionTag;
         }
     }
 }

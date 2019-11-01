@@ -45,7 +45,7 @@ namespace MuYin.AI.Consideration.Jobs
                 c0.SamePlaceCount.Score = ConsiderPlaceCount(i, ref c0, ref c1);
                 
                 var score = (c0.Distance.Score + c0.SamePlaceCount.Score) / 2;
-                Debug.Log($"I am bed: {objectEntity}, this person{OwnersPos[i].OwnerEntity}'s score is {score}");
+                //Debug.Log($"I am bed: {objectEntity}, this person{OwnersPos[i].OwnerEntity}'s score is {score}");
                 
                 if (c0.Score > score) continue;
                 

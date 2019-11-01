@@ -2,11 +2,11 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace MuYin.Scripts.Navigation.Component
+namespace MuYin.Navigation.Component
 {
     [RequireComponent(typeof(ConvertToEntity))]
     [RequiresEntityConversion]
-    public class MotionTargetAuthoring : MonoBehaviour, IConvertGameObjectToEntity
+    public class MotionInfoAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         //public Transform Transform;
         public NavigateStatus Status;
@@ -17,10 +17,10 @@ namespace MuYin.Scripts.Navigation.Component
          EntityManager              manager,
          GameObjectConversionSystem conversionSystem)
         {
-            var data = new MotionStatus
+            var data = new MotionInfo
             {
                 //Position = Transform.position,
-                Status       = Status,
+                NavigateStatus       = Status,
                 NavigateType = NavigateType,
             };
 
@@ -28,10 +28,11 @@ namespace MuYin.Scripts.Navigation.Component
         }
     }
 
-    public struct MotionStatus : IComponentData
+    public struct MotionInfo : IComponentData
     {
         public float3         TargetPosition;
-        public NavigateStatus Status;
+        public NavigateStatus NavigateStatus;
         public NavigateType   NavigateType;
+        public Entity TargetEntity;
     }
 }

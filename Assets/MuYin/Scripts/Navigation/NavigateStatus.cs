@@ -1,8 +1,9 @@
-namespace MuYin.Scripts.Navigation
+namespace MuYin.Navigation
 {
     public enum NavigateStatus
     {
         NoTarget,
+        Start,
         Navigating,
         Arrived,
     }

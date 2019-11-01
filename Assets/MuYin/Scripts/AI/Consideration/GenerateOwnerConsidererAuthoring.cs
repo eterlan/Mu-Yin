@@ -1,3 +1,4 @@
+using MuYin.AI.Consideration.Interface;
 using Unity.Entities;
 using UnityEngine;
 

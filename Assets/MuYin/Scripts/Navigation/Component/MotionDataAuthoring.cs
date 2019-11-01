@@ -2,7 +2,7 @@
 using Unity.Transforms;
 using UnityEngine;
 
-namespace MuYin.Scripts.Navigation.Component
+namespace MuYin.Navigation.Component
 {
     [DisallowMultipleComponent]
     [RequiresEntityConversion]

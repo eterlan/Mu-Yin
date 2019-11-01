@@ -1,20 +1,20 @@
-using MuYin.Scripts.Navigation.Component;
+using MuYin.Navigation.Component;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-namespace MuYin.Scripts.Navigation.System
+namespace MuYin.Navigation.System
 {
     public class RotationSystem : ComponentSystem
     {
         protected override void OnUpdate()
         {
             Entities.ForEach((ref LocalToWorld localToWorld, ref RotationEulerXYZ rotation, ref MotionData motion, ref 
-                                  MotionStatus 
+                                  MotionInfo 
                                   target) =>
             {
-                if (target.Status != NavigateStatus.Navigating) return;
+                if (target.NavigateStatus != NavigateStatus.Navigating) return;
             
                 var toTargetVector = target.TargetPosition - localToWorld.Position;
                 toTargetVector.y = 0;

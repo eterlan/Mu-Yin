@@ -38,7 +38,6 @@ namespace MuYin.AI.Systems
             {
                 for (var lv = 0; lv < Keys.Length; lv++)
                 {
-                    // TEST execute return 会造成所有entity都不执行还是独立开的？
                     // 如果需求等级低于正在检测的等级，筛除该component。
                     if (satisfaction.CurrentLv < lv) return;
                 
