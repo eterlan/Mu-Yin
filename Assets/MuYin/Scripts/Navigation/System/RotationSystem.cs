@@ -5,10 +5,10 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-using NotImplementedException = System.NotImplementedException;
 
 namespace MuYin.Navigation.System
 {
+    [UpdateInGroup(typeof(NavigationSystemGroup))]
     public class RotationSystem : JobComponentSystem
     {
         [RequireComponentTag(typeof(InNavigation))]

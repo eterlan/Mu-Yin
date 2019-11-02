@@ -3,6 +3,7 @@ using MuYin.AI.Components.FSM;
 using MuYin.AI.Systems;
 using MuYin.Gameplay.Systems;
 using MuYin.Navigation.Component;
+using MuYin.Navigation.Component.FSM;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -18,11 +19,11 @@ namespace MuYin.AI.ActionProcessor
         private BeginSimulationEntityCommandBufferSystem m_beginEcbSystem;
         private       EndSimulationEntityCommandBufferSystem m_endEcbSystem;
 
-        [RequireComponentTag(typeof(OnStartNavigation))]
-        private struct OnStartNavigateJob : IJobForEachWithEntity<ActionInfo>
+        [RequireComponentTag(typeof(OnActionSelected))]
+        private struct OnActionSelectedJob : IJobForEachWithEntity<ActionInfo>
         {
             public EntityCommandBuffer.Concurrent EndEcb;
-
+        
             public void Execute
             (
                 Entity         actor,
@@ -30,7 +31,6 @@ namespace MuYin.AI.ActionProcessor
                 ref ActionInfo c0)
             {
                 // 如果 最高分行为与目前执行动作相同 什么都不做。
-                EndEcb.RemoveComponent<OnStartNavigation>(index, actor);
                 EndEcb.AddComponent<InNavigation>(index, actor);
             }
         }
@@ -46,7 +46,6 @@ namespace MuYin.AI.ActionProcessor
                 int            index,
                 ref ActionInfo c0)
             {
-                EndEcb.RemoveComponent<OnArrived>(index, actor);
                 EndEcb.AddComponent<InProcessing>(index, actor);
             }
         }
@@ -75,7 +74,7 @@ namespace MuYin.AI.ActionProcessor
         }
 
         [RequireComponentTag(typeof(OnActionEnd))]
-        private struct OnActionEndJob : IJobForEachWithEntity<ActionInfo, MotionInfo>
+        private struct OnActionEndJob : IJobForEachWithEntity<ActionInfo>
         {
             public EntityCommandBuffer.Concurrent EndEcb;
 
@@ -83,18 +82,16 @@ namespace MuYin.AI.ActionProcessor
             (
                 Entity         actor,
                 int            index,
-                ref ActionInfo c0,
-                ref MotionInfo c1)
+                ref ActionInfo c0)
             {
                 EndEcb.RemoveComponent<OnActionEnd>(index, actor);
                 EndEcb.RemoveComponent(index, actor, c0.CurrentActionTag);
                 c0 = default;
-                c1 = default;
             }
         }
 
         [RequireComponentTag(typeof(OnActionInvalid))]
-        private struct OnActionInvalidJob : IJobForEachWithEntity<ActionInfo, MotionInfo>
+        private struct OnActionInvalidJob : IJobForEachWithEntity<ActionInfo>
         {
             public EntityCommandBuffer.Concurrent EndEcb;
 
@@ -102,13 +99,11 @@ namespace MuYin.AI.ActionProcessor
             (
                 Entity         actor,
                 int            index,
-                ref ActionInfo c0,
-                ref MotionInfo c1)
+                ref ActionInfo c0)
             {
                 EndEcb.RemoveComponent<OnActionInvalid>(index, actor);
                 EndEcb.RemoveComponent(index, actor, c0.CurrentActionTag);
                 c0 = default;
-                c1 = default;
             }
         }
 
@@ -128,7 +123,7 @@ namespace MuYin.AI.ActionProcessor
         
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            var onStartNavigateJobHandle = new OnStartNavigateJob
+            var onStartNavigateJobHandle = new OnActionSelectedJob
             {
                 EndEcb = m_endEcbSystem.CreateCommandBuffer().ToConcurrent()
             }.Schedule(this, inputDeps);

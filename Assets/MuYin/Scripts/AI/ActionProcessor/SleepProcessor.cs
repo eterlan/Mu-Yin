@@ -1,9 +1,11 @@
 ﻿using MuYin.AI.Components;
+using MuYin.AI.Components.ActionTag;
 using MuYin.AI.Components.FSM;
 using MuYin.Gameplay.Components;
 using MuYin.Gameplay.Enum;
 using MuYin.Gameplay.Systems;
 using MuYin.Navigation.Component;
+using MuYin.Navigation.Component.FSM;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -18,7 +20,6 @@ namespace MuYin.AI.ActionProcessor
     {
         private EntityQuery                              m_bedGroup;
         private EndSimulationEntityCommandBufferSystem   m_endEcbSystem;
-        private ValidateUsageRequestSystem               m_validateUsageRequestSystem;
 
         private struct BedInfo
         {
@@ -49,7 +50,7 @@ namespace MuYin.AI.ActionProcessor
             }
         }
 
-        [RequireComponentTag(typeof(OnStartNavigation))]
+        [RequireComponentTag(typeof(OnActionSelected),typeof(SleepActionTag))]
         private struct OnStartNavigateJob : IJobForEachWithEntity_EBCC<MyOwnPlace, ActionInfo, MotionInfo>
         {
             [ReadOnly] public NativeArray<BedInfo> BedInfos;
@@ -98,7 +99,7 @@ namespace MuYin.AI.ActionProcessor
             }
         }
 
-        [RequireComponentTag(typeof(OnArrived))]
+        [RequireComponentTag(typeof(OnArrived),typeof(SleepActionTag))]
         private struct OnArrivedJob : IJobForEachWithEntity<ActionInfo, MotionInfo>
         {
             public EntityCommandBuffer.Concurrent EndEcb;
@@ -114,7 +115,7 @@ namespace MuYin.AI.ActionProcessor
             }
         }
 
-        [RequireComponentTag(typeof(InProcessing))]
+        [RequireComponentTag(typeof(InProcessing),typeof(SleepActionTag))]
         private struct InActionProcessingJob : IJobForEachWithEntity_EBC<Need, ActionInfo>
         {
             [DeallocateOnJobCompletion] [ReadOnly]
@@ -144,7 +145,7 @@ namespace MuYin.AI.ActionProcessor
             }
         }
 
-        [RequireComponentTag(typeof(OnActionEnd))]
+        [RequireComponentTag(typeof(OnActionEnd),typeof(SleepActionTag))]
         private struct OnActionEndJob : IJobForEachWithEntity<ActionInfo, MotionInfo>
         {
             public void Execute
@@ -190,7 +191,6 @@ namespace MuYin.AI.ActionProcessor
         protected override void OnCreate()
         {
             m_endEcbSystem               = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-            m_validateUsageRequestSystem = World.GetOrCreateSystem<ValidateUsageRequestSystem>();
 
             m_bedGroup = GetEntityQuery(ComponentType.ReadOnly<Bed>(), ComponentType.ReadOnly<Translation>());
         }

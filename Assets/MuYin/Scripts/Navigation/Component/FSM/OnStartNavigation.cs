@@ -1,10 +1,8 @@
 using Unity.Entities;
 
-
-namespace MuYin.AI.Components.FSM
+namespace MuYin.Navigation.Component.FSM
 {
     public struct OnStartNavigation : IComponentData
     {
-        public int Value;
     }
 }

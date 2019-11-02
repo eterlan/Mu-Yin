@@ -10,16 +10,14 @@ using UnityEngine;
 namespace MuYin.Navigation.System
 {
     //Todo: Maybe I should AccelerationSystem to handle player keyboard input.
+    [UpdateInGroup(typeof(NavigationSystemGroup))]
     public class MoveForwardSystem : JobComponentSystem
     {
-        private EndSimulationEntityCommandBufferSystem m_endEcbSystem;
-        //private EntityQuery m_movementGroup;
         
         [RequireComponentTag(typeof(InNavigation))]
         private struct MoveForward : IJobForEachWithEntity<LocalToWorld, Translation, MotionData, MotionInfo>
         {
             public float DeltaTime;
-            public EntityCommandBuffer.Concurrent EndEcb;
             public void Execute
             (
                 Entity actor,
@@ -30,15 +28,6 @@ namespace MuYin.Navigation.System
                 [ReadOnly]ref MotionInfo   c3)
             {
                 var distance = math.distance(c3.TargetPosition, c1.Value);
-                
-                if (distance < c2.BreakDistance)
-                {
-                    EndEcb.RemoveComponent<InNavigation>(index, actor);
-                    EndEcb.AddComponent<OnArrived>(index, actor);
-                    //Debug.Log(d3.Status+""+distance);
-
-                    return;
-                }
 
                 var toSpeed = distance < c2.DecelerationDistance
                     ? 0f 
@@ -54,13 +43,11 @@ namespace MuYin.Navigation.System
             return new MoveForward
             {
                 DeltaTime = Time.deltaTime,
-                EndEcb = m_endEcbSystem.CreateCommandBuffer().ToConcurrent()
             }.Schedule(this, inputDeps);
         }
 
         protected override void OnCreate()
         {
-            m_endEcbSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
 
         protected override void OnDestroy() { }

@@ -1,6 +1,7 @@
 using MuYin.AI.Components;
 using MuYin.AI.Components.FSM;
 using MuYin.Gameplay.Systems;
+using MuYin.Navigation.Component.FSM;
 using Unity.Entities;
 using Unity.Burst;
 using Unity.Collections;
@@ -30,8 +31,8 @@ namespace MuYin.AI.Systems
                     
                 c0.CurrentActionTag = c0.HighestScoreActionTag;
                 BeginEcb.AddComponent(index, entity, c0.HighestScoreActionTag);
-                BeginEcb.AddComponent<OnStartNavigation>(index, entity);
-                EndEcb.RemoveComponent<OnStartNavigation>(index, entity);
+                BeginEcb.AddComponent<OnActionSelected>(index, entity);
+                EndEcb.RemoveComponent<OnActionSelected>(index, entity);
             }
             
         }

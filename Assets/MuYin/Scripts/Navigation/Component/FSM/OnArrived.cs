@@ -1,7 +1,6 @@
 using Unity.Entities;
 
-
-namespace MuYin.AI.Components.FSM
+namespace MuYin.Navigation.Component.FSM
 {
     public struct OnArrived : IComponentData
     {
