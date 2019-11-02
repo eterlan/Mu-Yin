@@ -12,26 +12,31 @@ namespace MuYin.Gameplay.Systems
     public enum ResultType{Invalid, Success, Fail}
     public struct ValidateUsageRequest : IComponentData
     {
-        public Entity UserEntity;
         public Entity ObjectEntity;
-        public bool   IsForce;
+        public readonly bool IsForce;
         public ResultType ResultType;
+
+        public ValidateUsageRequest(Entity objectEntity, bool isForce)
+        {
+            ObjectEntity = objectEntity;
+            IsForce = isForce;
+            ResultType = ResultType.Invalid;
+        }
     }
     public class ValidateUsageRequestSystem : ComponentSystem
     {
         protected override void OnUpdate()
         {
-            Entities.ForEach((ref ValidateUsageRequest request) =>
+            Entities.ForEach((Entity actor, ref ValidateUsageRequest request) =>
             {
-                request.ResultType = UsageRequest(ref request) 
+                request.ResultType = UsageRequest(actor, ref request) 
                     ? ResultType.Success 
                     : ResultType.Fail;
             });
         }
 
-        private bool UsageRequest(ref ValidateUsageRequest request)
+        private bool UsageRequest(Entity userEntity, ref ValidateUsageRequest request)
         {
-            var userEntity = request.UserEntity;
             var objectEntity = request.ObjectEntity;
             var isForce = request.IsForce;
             

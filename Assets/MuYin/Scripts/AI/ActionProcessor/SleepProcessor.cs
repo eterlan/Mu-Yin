@@ -13,8 +13,7 @@ using UnityEngine;
 
 namespace MuYin.AI.ActionProcessor
 {
-    [UpdateInGroup(typeof(ActionProcessorGroup))]
-    [UpdateBefore(typeof(GeneralActionProcessor))]
+    [UpdateInGroup(typeof(ConcreteActionProcessorGroup))]
     public class SleepProcessor : JobComponentSystem
     {
         private EntityQuery                              m_bedGroup;
@@ -63,7 +62,6 @@ namespace MuYin.AI.ActionProcessor
                 ref ActionInfo            c0,
                 ref MotionInfo            c1)
             {
-                // Todo: Where should sleepTime be set?
                 var targetEntity = Entity.Null;
 
                 foreach (var ownPlace in b0)
@@ -71,6 +69,7 @@ namespace MuYin.AI.ActionProcessor
                     if (ownPlace.Type != PlaceType.Bed) continue;
                     targetEntity = ownPlace.Entity;
                 }
+                // Todo: If have no bed, find public bed which is usable.
 
                 // if (targetEntity != Entity.Null)
                 // {
@@ -100,16 +99,18 @@ namespace MuYin.AI.ActionProcessor
         }
 
         [RequireComponentTag(typeof(OnArrived))]
-        private struct OnArrivedJob : IJobForEachWithEntity<ActionInfo>
+        private struct OnArrivedJob : IJobForEachWithEntity<ActionInfo, MotionInfo>
         {
+            public EntityCommandBuffer.Concurrent EndEcb;
             public void Execute
             (
                 Entity         actor,
                 int            index,
-                ref ActionInfo c0)
+                ref ActionInfo c0,
+                ref MotionInfo c1)
             {
-                // if (!m_requestSystem.UsageRequest(actor, c1.TargetEntity, false))
-                //     //     c0.ActionStatus = ActionStatus.Invalid;
+                Debug.Log("onArrived");
+                EndEcb.AddComponent(index, actor, new ValidateUsageRequest(c1.TargetEntity, false));
             }
         }
 
@@ -126,22 +127,20 @@ namespace MuYin.AI.ActionProcessor
                 DynamicBuffer<Need> needs,
                 ref ActionInfo      c0)
             {
-                if (c0.ElapsedTimeSinceApplyEffect > 1)
-                {
-                    //var needs = NeedBufferFromEntity[actor];
-                    UpdateNeedPerSecond(ref c0, BedInfos[c0.DataKey].Restoration);
-                    c0.ElapsedTimeSinceApplyEffect = 0;
-                    Debug.Log("zzz...");
+                if (c0.ElapsedTimeSinceApplyEffect < 1) return;
+                // if not floor this, UpdateNeed would apply one less time.
+                c0.ElapsedTimeSinceExecute = math.floor(c0.ElapsedTimeSinceExecute);
                 
-                    void UpdateNeedPerSecond(ref ActionInfo info, int restoration)
-                    {
-                        var sleepNeed = needs[(int) NeedType.Sleepness];
-                        sleepNeed.Urgency               -= restoration / info.ActionExecuteTime;
-                        needs[(int) NeedType.Sleepness] =  sleepNeed;
-                    }
+                UpdateNeedPerSecond(ref c0, BedInfos[c0.DataKey].Restoration);
+                c0.ElapsedTimeSinceApplyEffect = 0;
+                Debug.Log("zzz...");
+                
+                void UpdateNeedPerSecond(ref ActionInfo info, int restoration)
+                {
+                    var sleepNeed = needs[(int) NeedType.Sleepness];
+                    sleepNeed.Urgency               -= restoration / info.ActionExecuteTime;
+                    needs[(int) NeedType.Sleepness] =  sleepNeed;
                 }
-
-               
             }
         }
 
@@ -171,7 +170,11 @@ namespace MuYin.AI.ActionProcessor
                 BedInfos = bedInfos
             }.Schedule(this, prepareBedInfoJobHandle);
 
-            var onArrivedJobHandle = new OnArrivedJob().Schedule(this, onStartNavigateJobHandle);
+            var onArrivedJobHandle = new OnArrivedJob
+            {
+                EndEcb = m_endEcbSystem.CreateCommandBuffer().ToConcurrent()
+            }.Schedule(this, onStartNavigateJobHandle);
+            
             var inActionProcessingJobHandle = new InActionProcessingJob
             {
                 BedInfos = bedInfos, 
