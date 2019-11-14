@@ -9,7 +9,7 @@ namespace MuYin.Controller
     public struct PlayerInput : IComponentData
     {
         public float3 MousePosOnScreen;
-        public float3 MousePosInWorld;
+        public float3 MousePosCollideInWorld;
         public bool LMB_Down;
         public bool RMB_Down;
     }

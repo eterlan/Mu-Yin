@@ -1,4 +1,7 @@
-namespace MuYin.AI.Consideration
+using MuYin.AI.Components;
+using Unity.Entities;
+
+namespace MuYin.AI.Consideration.Interface
 {
     public interface IConsideration
     {
@@ -39,6 +42,13 @@ namespace MuYin.AI.Consideration
         {
             var normalized = (input - MinRange) / (MaxRange - MinRange);
             return Weight * (Inverse ? 1 - normalized : normalized);
+        }
+
+        public static void CompareHighestScore(float actionScore, ComponentType actionType, ref ActionInfo c1 )
+        {
+            if (!(actionScore > c1.HighestScore)) return;
+            c1.HighestScore          = actionScore;
+            c1.HighestScoreActionTag = actionType;
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MuYin.AI.Consideration
 {
-    public struct GenerateOwnerConsiderer : IComponentData, IGenerationConsiderer
+    public struct SetPlaceOwnerConsiderer : IComponentData, IGenerationConsiderer
     {
         public float Score { get; set; }
         public Entity OwnerEntity;
@@ -13,9 +13,10 @@ namespace MuYin.AI.Consideration
         public ConsiderationBase SamePlaceCount;
     }
 
+    [DisallowMultipleComponent]
     [RequireComponent(typeof(ConvertToEntity))]
     [RequiresEntityConversion]
-    public class GenerateOwnerConsidererAuthoring : MonoBehaviour, IConvertGameObjectToEntity
+    public class SetPlaceOwnerConsidererAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         public void Convert
         (
@@ -23,7 +24,7 @@ namespace MuYin.AI.Consideration
             EntityManager              manager,
             GameObjectConversionSystem conversionSystem)
         {
-            var data = new GenerateOwnerConsiderer
+            var data = new SetPlaceOwnerConsiderer
             {
                 Distance = new ConsiderationBase(0.75f, 0, 100, true),
                 SamePlaceCount = new ConsiderationBase(1, 0, 2, true)

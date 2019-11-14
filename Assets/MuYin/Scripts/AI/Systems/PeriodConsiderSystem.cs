@@ -1,4 +1,4 @@
-using MuYin.AI.Consideration.Jobs;
+using MuYin.AI.Consideration;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;

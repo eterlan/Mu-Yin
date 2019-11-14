@@ -3,7 +3,7 @@ using Unity.Collections;
 
 namespace MuYin.Tests
 {
-    public class TestSetOwnerSystem :ECSTestsFixture
+    public class ToComponentDataCannotWriteBack :ECSTestsFixture
     {
         [Test]
         public void Test_To_Component_Data_Cannot_Write_Back()

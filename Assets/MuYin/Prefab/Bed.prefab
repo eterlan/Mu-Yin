@@ -387,7 +387,8 @@ GameObject:
   - component: {fileID: 2423701832702173237}
   - component: {fileID: 2423701832702173234}
   - component: {fileID: 2423701832702173236}
-  - component: {fileID: 2423701832702173239}
+  - component: {fileID: 9015223504895096337}
+  - component: {fileID: 2736230004569655106}
   m_Layer: 0
   m_Name: Bed
   m_TagString: Untagged
@@ -402,7 +403,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2423701832702173230}
-  m_LocalRotation: {x: -0, y: -0.6339772, z: -0, w: 0.77335185}
+  m_LocalRotation: {x: 0, y: -0.6339749, z: 0, w: 0.77335364}
   m_LocalPosition: {x: 2.31, y: 0, z: -3.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -479,7 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af6a668670e42a8b6f9b1739933aad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2423701832702173239
+--- !u!114 &9015223504895096337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -488,7 +489,79 @@ MonoBehaviour:
   m_GameObject: {fileID: 2423701832702173230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 352b3ad9face4996a76a42caa0d54abb, type: 3}
+  m_Script: {fileID: 11500000, guid: b275e5f92732148048d7b77e264ac30e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShapeType: 0
+  m_PrimitiveCenter:
+    x: 0
+    y: 0.25
+    z: 0.19999945
+  m_PrimitiveSize:
+    x: 1
+    y: 1.0984516
+    z: 2.5600004
+  m_PrimitiveOrientation:
+    Value:
+      x: -0
+      y: 0
+      z: 0
+    RotationOrder: 4
+  m_Capsule:
+    Height: 2.5600004
+    Radius: 0.5492258
+    Axis: 2
+  m_Cylinder:
+    Height: 2.5600004
+    Radius: 0.5492258
+    Axis: 2
+  m_CylinderSideCount: 20
+  m_SphereRadius: 1.2800002
+  m_MinimumSkinnedVertexWeight: 0.1
+  m_ConvexHullGenerationParameters:
+    m_SimplificationTolerance: 0.038400006
+    m_BevelRadius: 0.05
+    m_MinimumAngle: 2.5000002
+  m_CustomMesh: {fileID: 0}
+  m_Material:
+    m_SupportsTemplate: 1
+    m_Template: {fileID: 0}
+    m_IsTrigger:
+      m_Override: 0
+      m_Value: 0
+    m_Friction:
+      m_Override: 0
+      m_Value:
+        Value: 0.5
+        CombineMode: 0
+    m_Restitution:
+      m_Override: 0
+      m_Value:
+        Value: 0
+        CombineMode: 2
+    m_BelongsTo:
+      m_Override: 0
+      m_Value: 0000010000000000000000000000000000000000000000000000000000000000
+    m_CollidesWith:
+      m_Override: 0
+      m_Value: 0101010101010101010101010101010101010101010101010101010101010101
+    m_RaisesCollisionEvents:
+      m_Override: 0
+      m_Value: 0
+    m_CustomTags:
+      m_Override: 0
+      m_Value: 0000000000000000
+  m_ConvexRadius_Deprecated: -1
+--- !u!114 &2736230004569655106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2423701832702173230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b215a61721b4c8ca2f62b289ca3a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2423701833457278483

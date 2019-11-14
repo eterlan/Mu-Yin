@@ -1,11 +1,14 @@
 using MuYin.AI.Components;
+using MuYin.AI.Consideration.Interface;
+using Unity.Burst;
 using Unity.Entities;
 
-namespace MuYin.AI.Consideration.Jobs
+namespace MuYin.AI.Consideration
 {
-    public struct SleepConsiderJob : IJobForEach_BCC<Need, SleepConsiderer, ActionInfo>
+    [BurstCompile]
+    public struct SleepConsiderJob : IJobForEach_BCC<Need, SleepConsiderer, ActionInfo>, IConsiderJob
     {
-        public void Execute(DynamicBuffer<Need> b0 , ref SleepConsiderer c0, ref ActionInfo actionInfo)
+        public void Execute(DynamicBuffer<Need> b0 , ref SleepConsiderer c0, ref ActionInfo c1)
         {
             // 计算每个Consideration的得分再计算行为的总分（除以C个数）。
             var sleepness = b0[(int)NeedType.Sleepness].Urgency;
@@ -14,14 +17,12 @@ namespace MuYin.AI.Consideration.Jobs
             c0.SleepnessConsideration = temp;
             
             c0.Score = temp.Score;
-            //Debug.Log(c0.Score);
-            
-            // 记录最高得分行为。
-            // Todo: 把比较放到可复用的地方地方。
-            // 可以把每级的considerComponent综合起来，做成几个compare job。
-            if (!(c0.Score > actionInfo.HighestScore)) return;
-            actionInfo.HighestScore = c0.Score;
-            actionInfo.HighestScoreActionTag    = c0.ActionTag;
+            CompareHightestScore(c0.Score, c0.ActionTag, ref c1);
+        }
+
+        public void CompareHightestScore(float actionScore, ComponentType actionType, ref ActionInfo c1 )
+        {
+            ConsiderationBase.CompareHighestScore(actionScore,actionType, ref c1);
         }
     }
 }

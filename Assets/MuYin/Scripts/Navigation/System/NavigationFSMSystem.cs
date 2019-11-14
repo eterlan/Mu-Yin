@@ -34,7 +34,7 @@ namespace MuYin.Navigation.System
                 ref MotionData  c2)
             {
                 var distance = math.distance(c1.TargetPosition, c0.Value);
-                Debug.Log(distance);
+                //Debug.Log(distance);
                 if (distance > c2.BreakDistance) return;
                 
                 BeginEcb.RemoveComponent<InNavigation>(index, actor);

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Physics Category Names
   m_EditorClassIdentifier: 
   m_CategoryNames:
-  - 
-  - 
-  - 
+  - Obstacle
+  - NPC
+  - Bed
   - 
   - 
   - 
