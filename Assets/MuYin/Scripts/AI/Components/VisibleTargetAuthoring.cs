@@ -3,16 +3,16 @@ using UnityEngine;
 
 namespace MuYin.AI.Systems
 {
-    public struct TargetInRadius : IBufferElementData
+    public struct VisibleTarget : IBufferElementData
     {
         public Entity TargetEntity;
     }
     [RequiresEntityConversion]
-    public class TargetInRadiusAuthoring : MonoBehaviour, IConvertGameObjectToEntity
+    public class VisibleTargetAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         public void Convert( Entity entity, EntityManager manager, GameObjectConversionSystem conversionSystem)
         {
-            manager.AddBuffer<TargetInRadius>(entity);
+            manager.AddBuffer<VisibleTarget>(entity);
         }
     }
 }

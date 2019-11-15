@@ -8,7 +8,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Ray = UnityEngine.Ray;
 
-namespace MuYin.AI.Systems
+namespace MuYin.AI.Components
 {
     // Todo: SetSingleton
     public struct FieldOfView : IComponentData
@@ -51,6 +51,15 @@ namespace MuYin.AI.Systems
             Debug.Log($"query{query}");
             var radius = query.GetSingleton<FieldOfView>().Radius;
             Debug.Log($"radius{radius}");
+        }
+
+        // For Editor Debug.
+        public float3 Deg2Dir(float angleInDeg, bool isGlobal)
+        {
+            if (!isGlobal)
+                angleInDeg += transform.eulerAngles.y;
+        
+            return new float3(math.sin(math.radians(angleInDeg)), 0, math.cos(math.radians(angleInDeg)));
         }
     }
 }

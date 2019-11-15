@@ -6,6 +6,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Physics.Systems;
 using UnityEngine;
 using Unity.Transforms;
 
@@ -14,38 +15,50 @@ namespace MuYin.AI.Systems
     public class VisualDetactionSystem : JobComponentSystem
     {
         private PhysicsDetectionUtilitySystem m_utilitySystem;
+        private BuildPhysicsWorld m_buildPhysicsWorldSystem;
         private EntityQuery m_npcGroup;
+        private EntityQuery m_detectorGroup;
 
-        [BurstCompile]
+        //[BurstCompile]
         private struct VisualDetectionJob : IJobChunk
         {
             [ReadOnly] public FieldOfView                               Setting;
+            [ReadOnly] public ArchetypeChunkEntityType                  EntityType;
             [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> LocalToWorldType;
-            public            ArchetypeChunkBufferType<TargetInRadius>  TargetInRadiusType;
+            public            ArchetypeChunkBufferType<VisibleTarget>  VisibleTargetType;
             [ReadOnly] public CollisionWorld                            World;
-            [ReadOnly] public NativeArray<OverlapAabbInput>             Inputs;
             [ReadOnly] public ComponentDataFromEntity<Translation>      TranslationAccessor;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                var targetInRadiusBufferAccessor = chunk.GetBufferAccessor(TargetInRadiusType);
+                var VisibleTargetBufferAccessor = chunk.GetBufferAccessor(VisibleTargetType);
                 var chunkLocalToWorld            = chunk.GetNativeArray(LocalToWorldType);
+                var chunkDetector = chunk.GetNativeArray(EntityType);
 
                 for (var i = 0; i < chunk.Count; i++)
                 {
+                    var detectorEntity = chunkDetector[i];
+                    Debug.Log($"I'm entity: {detectorEntity}");
+
                     var localToWorld   = chunkLocalToWorld[i];
-                    var targetInRadius = targetInRadiusBufferAccessor[i];
-                    // TEST 能在Job中建立NativeContainer吗？
-                    //      结果： 
-                    var hits = new NativeList<int>(1, Allocator.TempJob);
+                    var VisibleTarget = VisibleTargetBufferAccessor[i];
+                    VisibleTarget.Clear();
+                    var hits = new NativeList<int>(1, Allocator.Temp);
                     
-                    // TODO 应该移除检测者本身。
-                    if (InRange(localToWorld.Position, ref Setting, ref hits))
+                    // TODO 
+                    // 有什么办法能draw gizmo for ecs？
+                    //      1. 先把数据传给mono
+
+                    if (Overlapped(localToWorld.Position, ref Setting, ref hits))
                     {
-                        foreach (var hitIndex in hits)
+                        for (var j = 0; j < hits.Length; j++)
                         {
-                            var detectedEntity = World.Bodies[hitIndex].Entity;
+                            var detectedEntity = World.Bodies[hits[j]].Entity;
                             var detectedPos    = TranslationAccessor[detectedEntity].Value;
+
+                            var IsSelf = detectorEntity == detectedEntity;
+                            if (IsSelf) 
+                                continue;
 
                             if (!InViewCone(ref localToWorld, detectedPos, ref Setting))
                                 continue;
@@ -53,11 +66,12 @@ namespace MuYin.AI.Systems
                             if (!Visible(ref World, localToWorld.Position, detectedPos, ref Setting))
                                 continue;
 
-                            targetInRadius.Add(new TargetInRadius
+                            VisibleTarget.Add(new VisibleTarget
                             {
                                 TargetEntity = detectedEntity
-                                // Raise event?
+                                // TODO Raise event?
                             });
+                            Debug.Log($"Entity Detected{detectedEntity}");
                         }
                     }
 
@@ -65,7 +79,7 @@ namespace MuYin.AI.Systems
                 }
             }
 
-            private bool InRange(float3 position, ref FieldOfView setting, ref NativeList<int> hits)
+            private bool Overlapped(float3 position, ref FieldOfView setting, ref NativeList<int> hits)
             {
                 var radius = setting.Radius;
                 var input = new OverlapAabbInput
@@ -108,7 +122,10 @@ namespace MuYin.AI.Systems
             {
                 var dir   = detectedPos - localToWorld.Position;
                 var angle = Vector3.Angle(localToWorld.Forward, dir);
-                return angle < setting.Angle * 0.5;
+                var distance = math.lengthsq(dir);
+                var inAngle = angle < setting.Angle * 0.5;
+                var inDistance = distance < math.lengthsq(setting.Radius);
+                return inAngle && inDistance;
             }
         }
 
@@ -116,59 +133,30 @@ namespace MuYin.AI.Systems
         {
             if (Input.GetMouseButtonDown(1))
             {
-                var detector = m_npcGroup.ToEntityArray(Allocator.TempJob);
-                var translations = m_npcGroup.ToComponentDataArray<Translation>(Allocator.TempJob);
-                var setting = GetSingleton<FieldOfView>();
-
-                FindVisibleTarget(translations[0].Value, setting, detector[0]);
-                
-                translations.Dispose();
-                detector.Dispose();
+                inputDeps = new VisualDetectionJob
+                {
+                    Setting = GetSingleton<FieldOfView>(),
+                    EntityType = GetArchetypeChunkEntityType(),
+                    LocalToWorldType = GetArchetypeChunkComponentType<LocalToWorld>(true),
+                    VisibleTargetType = GetArchetypeChunkBufferType<VisibleTarget>(false),
+                    World = m_buildPhysicsWorldSystem.PhysicsWorld.CollisionWorld,
+                    TranslationAccessor = GetComponentDataFromEntity<Translation>(true)
+                }.Schedule(m_detectorGroup, inputDeps);
             }
             return inputDeps;
         }
-
-        public void FindVisibleTarget(float3 pos, FieldOfView setting, Entity detector)
-        {
-            var position = pos;
-            var radius = setting.Radius;
-            var input = new OverlapAabbInput
-            {
-                Aabb = new Aabb
-                {
-                    Max = position + new float3(radius, 0, radius), 
-                    Min = position - new float3(radius, 0, radius)
-                },
-                Filter = new CollisionFilter
-                {
-                    BelongsTo = setting.SelfTag.Value, 
-                    CollidesWith = setting.TargetTag.Value,
-                }
-            };
-        
-            var entities = new NativeList<Entity>(5, Allocator.TempJob);
-            var handle = m_utilitySystem.OverlapDetectionWithoutDetector(ref input, ref entities, detector);
-            // TODO 应该移除检测者本身。
-        
-            if (entities.Length > 0) { Debug.Log($"length: {entities.Length}  entities[0]{entities[0]}"); }
-            entities.Dispose(handle);
-        }
-        //
-        // public float3 Deg2Dir(float angleInDeg, bool isGlobal)
-        // {
-        //     if (!isGlobal)
-        //         angleInDeg += transform.eulerAngles.y;
-        //
-        //     return new float3(math.sin(math.radians(angleInDeg)), 0, math.cos(math.radians(angleInDeg)));
-        // }
-
 
         protected override void OnCreate()
         {
             m_npcGroup = GetEntityQuery(
                 ComponentType.ReadOnly<Translation>(), 
                 ComponentType.ReadOnly<Need>());
+            m_detectorGroup = GetEntityQuery(
+                ComponentType.ReadOnly<LocalToWorld>(),
+                ComponentType.ReadOnly<VisibleTarget>());
+
             m_utilitySystem = World.Active.GetOrCreateSystem<PhysicsDetectionUtilitySystem>();
+            m_buildPhysicsWorldSystem = World.GetOrCreateSystem<BuildPhysicsWorld>();
         }
 
         protected override void OnDestroy() { }
