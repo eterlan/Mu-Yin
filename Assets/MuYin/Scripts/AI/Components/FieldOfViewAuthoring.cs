@@ -15,7 +15,6 @@ namespace MuYin.AI.Components
     {
         public float Radius;
         public int Angle;
-        public int RayAmount;
         public PhysicsCategoryTags SelfTag;
         public PhysicsCategoryTags TargetTag;
 
@@ -29,7 +28,6 @@ namespace MuYin.AI.Components
         [Range(0, 180)]
         public int Angle;
         [Range(0, 100)]
-        public int RayAmount;
         public PhysicsCategoryTags SelfTag;
         public PhysicsCategoryTags TargetTag;
 
@@ -44,7 +42,6 @@ namespace MuYin.AI.Components
             {
                 Radius    = Radius,
                 Angle     = Angle,
-                RayAmount = RayAmount,
                 SelfTag   = SelfTag,
                 TargetTag = TargetTag
             });
