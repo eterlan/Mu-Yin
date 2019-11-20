@@ -1,7 +1,8 @@
+using MuYin.AI.ActionProcessor;
 using MuYin.AI.Systems;
 using Unity.Entities;
 
-namespace MuYin.AI.ActionProcessor
+namespace MuYin.AI.Action
 {
     [UpdateAfter(typeof(AISystemGroup))]
     public class ActionProcessorGroup : ComponentSystemGroup

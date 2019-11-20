@@ -1,18 +1,26 @@
 using System;
-using MuYin.AI.Components.ActionTag;
 using MuYin.AI.Consideration.Interface;
+using MuYin.AI.Enum;
+using MuYin.AI.Action.ActionData;
 using Unity.Entities;
 using UnityEngine;
+using MuYin.AI.Action.ActionTag;
 
 namespace MuYin.AI.Consideration
 {
     [Serializable]
     public struct SleepConsiderer : IComponentData, IActionConsiderer 
     {
-        public float Score { get => m_score; set => m_score = value; }
+        public float Score
+        {
+            get => m_score;
+            set => m_score = value;
+        }
 
-        public ComponentType ActionTag { get; set; }
-        public ConsiderationBase SleepnessConsideration;
+        public ActionType ActionType { get; set; }
+
+        public ConsiderationBase Sleepness;
+
         [SerializeField]
         private float m_score;
     }
@@ -29,9 +37,8 @@ namespace MuYin.AI.Consideration
         {
             var data = new SleepConsiderer
             {
-                Score = Score,
-                ActionTag = typeof(SleepActionTag),
-                SleepnessConsideration = new ConsiderationBase
+                ActionType = ActionType.Sleep,
+                Sleepness = new ConsiderationBase
                 {
                     Weight = 1,
                     MaxRange = 100,
@@ -40,6 +47,7 @@ namespace MuYin.AI.Consideration
                 }
             };
             manager.AddComponentData(entity, data);
+            ActionLookUpTable.Instance.AddNewAction(ActionType.Sleep, typeof(SleepActionTag));
         }
     }
 }

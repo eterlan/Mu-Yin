@@ -45,9 +45,7 @@ namespace MuYin.AI.Components
                 SelfTag   = SelfTag,
                 TargetTag = TargetTag
             });
-            Debug.Log($"query{query}");
             var radius = query.GetSingleton<FieldOfView>().Radius;
-            Debug.Log($"radius{radius}");
         }
 
         // For Editor Debug.

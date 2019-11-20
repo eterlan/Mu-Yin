@@ -278,9 +278,6 @@ MonoBehaviour:
     - Name: Type
       Entry: 3
       Data: 0
-    - Name: urgency
-      Entry: 3
-      Data: 0
     - Name: AddPerSecond
       Entry: 3
       Data: 1
@@ -293,9 +290,6 @@ MonoBehaviour:
     - Name: Type
       Entry: 3
       Data: 1
-    - Name: urgency
-      Entry: 3
-      Data: 0
     - Name: AddPerSecond
       Entry: 3
       Data: 1
@@ -308,9 +302,6 @@ MonoBehaviour:
     - Name: Type
       Entry: 3
       Data: 2
-    - Name: urgency
-      Entry: 3
-      Data: 0
     - Name: AddPerSecond
       Entry: 3
       Data: 1

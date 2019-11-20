@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MuYin.AI.Enum;
 using Sirenix.OdinInspector;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -6,25 +7,17 @@ using UnityEngine;
 
 namespace MuYin.AI.Components
 {
-    [SerializeField]
     public struct Need : IBufferElementData
     {
         public NeedType Type;
-        public int      urgency;
+        private int     m_urgency;
         public int      AddPerSecond;
 
         public int Urgency
         {
-            get => urgency; 
-            set => urgency = math.clamp(value, 0, 100);
+            get => m_urgency; 
+            set => m_urgency = math.clamp(value, 0, 100);
         }
-    }
-
-    public enum NeedType
-    {
-        Hungry,
-        Thirst,
-        Sleepness,
     }
 
     [RequiresEntityConversion]
@@ -34,6 +27,7 @@ namespace MuYin.AI.Components
 
         public void Convert( Entity entity, EntityManager manager, GameObjectConversionSystem conversionSystem)
         {
+            var buffer = manager.AddBuffer<Need>(entity);
             foreach (var need in needs)
             {
                 var data = new Need
@@ -42,7 +36,6 @@ namespace MuYin.AI.Components
                     Urgency      = need.Urgency,
                     AddPerSecond = need.AddPerSecond,        
                 };
-                var buffer = manager.AddBuffer<Need>(entity);
                 buffer.Add(data);
             }
         }

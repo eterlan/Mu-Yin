@@ -195,10 +195,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
+        type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
+        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
+    - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"needs","value":null'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a28aaa4a848640729e2585ae02145bc, type: 3}
 --- !u!1 &84393563
@@ -229,7 +244,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -321,7 +336,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &741084221
 PrefabInstance:
@@ -598,7 +613,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &979085717
 PrefabInstance:
@@ -772,7 +787,7 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1025997387
 MonoBehaviour:
@@ -904,7 +919,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1130092447
 PrefabInstance:
@@ -1110,7 +1125,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1453466502
 GameObject:
@@ -1140,7 +1155,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1502573896
 PrefabInstance:
@@ -1211,24 +1226,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 288715dca1ec14d6f93594f72beeb850, type: 3}
---- !u!1 &1650999574 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3255198192858513396, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
-    type: 3}
-  m_PrefabInstance: {fileID: 8603191697007321902}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1650999584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1650999574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7c5576f6149044be813d2c5538cbd8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1741272476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1309,7 +1306,7 @@ PrefabInstance:
     - target: {fileID: 2423701832702173233, guid: 288715dca1ec14d6f93594f72beeb850,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2423701832702173233, guid: 288715dca1ec14d6f93594f72beeb850,
         type: 3}
@@ -1378,7 +1375,7 @@ PrefabInstance:
     - target: {fileID: 6137623713739945231, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6137623713739945231, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
@@ -1398,7 +1395,7 @@ PrefabInstance:
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
@@ -1409,54 +1406,73 @@ PrefabInstance:
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"needs.[0]","value":{"$id":0,"$type":"MuYin.AI.Components.Need,
-        MuYin.AI","Type":0,"urgency":0,"AddPerSecond":1}'
+      value: '"path":"needs","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[MuYin.AI.Components.Need,
+        MuYin.AI]], mscorlib","$rlength":3,"$rcontent":[{"$type":"MuYin.AI.Components.Need,
+        MuYin.AI","Type":0,"AddPerSecond":1},{"$type":"MuYin.AI.Components.Need,
+        MuYin.AI","Type":1,"AddPerSecond":1},{"$type":"MuYin.AI.Components.Need,
+        MuYin.AI","Type":2,"AddPerSecond":1}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"needs.[0]","value":{"$id":0,"$type":"MuYin.AI.Components.Need,
+        MuYin.AI","Type":0,"AddPerSecond":0}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
       value: '"path":"needs.[0].AddPerSecond","value":{"$id":0,"$type":"System.Int32,
         mscorlib",1}'
       objectReference: {fileID: 0}
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[2]
+      propertyPath: serializationData.PrefabModifications.Array.data[3]
       value: '"path":"needs.[1]","value":{"$id":0,"$type":"MuYin.AI.Components.Need,
-        MuYin.AI","Type":1,"urgency":0,"AddPerSecond":1}'
+        MuYin.AI","Type":0,"AddPerSecond":0}'
       objectReference: {fileID: 0}
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[3]
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
       value: '"path":"needs.[1].AddPerSecond","value":{"$id":0,"$type":"System.Int32,
         mscorlib",1}'
       objectReference: {fileID: 0}
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[4]
-      value: '"path":"needs.[1].Type","value":{"$id":0,"$type":"MuYin.AI.Components.NeedType,
+      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      value: '"path":"needs.[1].Type","value":{"$id":0,"$type":"MuYin.AI.Enum.NeedType,
         MuYin.AI",1}'
       objectReference: {fileID: 0}
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      propertyPath: serializationData.PrefabModifications.Array.data[6]
       value: '"path":"needs.[2]","value":{"$id":0,"$type":"MuYin.AI.Components.Need,
-        MuYin.AI","Type":2,"urgency":0,"AddPerSecond":1}'
+        MuYin.AI","Type":0,"AddPerSecond":0}'
       objectReference: {fileID: 0}
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[6]
+      propertyPath: serializationData.PrefabModifications.Array.data[7]
       value: '"path":"needs.[2].AddPerSecond","value":{"$id":0,"$type":"System.Int32,
         mscorlib",1}'
       objectReference: {fileID: 0}
     - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[7]
-      value: '"path":"needs.[2].Type","value":{"$id":0,"$type":"MuYin.AI.Components.NeedType,
+      propertyPath: serializationData.PrefabModifications.Array.data[8]
+      value: '"path":"needs.[2].Type","value":{"$id":0,"$type":"MuYin.AI.Enum.NeedType,
         MuYin.AI",2}'
       objectReference: {fileID: 0}
-    - target: {fileID: 4984030264533887200, guid: 1a28aaa4a848640729e2585ae02145bc,
+    - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
         type: 3}
-      propertyPath: m_Enabled
+      propertyPath: serializationData.SerializationNodes.Array.data[4].Data
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
+        type: 3}
+      propertyPath: serializationData.SerializationNodes.Array.data[8].Data
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6137623713748650045, guid: 1a28aaa4a848640729e2585ae02145bc,
+        type: 3}
+      propertyPath: serializationData.SerializationNodes.Array.data[12].Data
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1530,9 +1546,71 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
         type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
+        type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
         type: 3}
+    - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"needs","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[MuYin.AI.Components.Need,
+        MuYin.AI]], mscorlib","$rlength":3,"$rcontent":[{"$type":"MuYin.AI.Components.Need,
+        MuYin.AI","Type":0,"AddPerSecond":1},{"$type":"MuYin.AI.Components.Need,
+        MuYin.AI","Type":1,"AddPerSecond":1},{"$type":"MuYin.AI.Components.Need,
+        MuYin.AI","Type":2,"AddPerSecond":1}]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"needs.[0]","value":{"$id":0,"$type":"MuYin.AI.Components.Need,
+        MuYin.AI","Type":0,"AddPerSecond":0}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
+      value: '"path":"needs.[0].AddPerSecond","value":{"$id":0,"$type":"System.Int32,
+        mscorlib",1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[3]
+      value: '"path":"needs.[1]","value":{"$id":0,"$type":"MuYin.AI.Components.Need,
+        MuYin.AI","Type":0,"AddPerSecond":0}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
+      value: '"path":"needs.[1].AddPerSecond","value":{"$id":0,"$type":"System.Int32,
+        mscorlib",1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      value: '"path":"needs.[1].Type","value":{"$id":0,"$type":"MuYin.AI.Enum.NeedType,
+        MuYin.AI",1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[6]
+      value: '"path":"needs.[2]","value":{"$id":0,"$type":"MuYin.AI.Components.Need,
+        MuYin.AI","Type":0,"AddPerSecond":0}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[7]
+      value: '"path":"needs.[2].AddPerSecond","value":{"$id":0,"$type":"System.Int32,
+        mscorlib",1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6656779061030267547, guid: 2f4179bcdbc9e4773bbffd808dd75f5e,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[8]
+      value: '"path":"needs.[2].Type","value":{"$id":0,"$type":"MuYin.AI.Enum.NeedType,
+        MuYin.AI",2}'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f4179bcdbc9e4773bbffd808dd75f5e, type: 3}

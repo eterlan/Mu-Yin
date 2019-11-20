@@ -1,16 +1,17 @@
 using Unity.Entities;
 using Unity.Collections;
 using MuYin.AI.Components;
+using MuYin.AI.Enum;
 
 namespace MuYin.AI.Consideration.Interface
 {
     public static class ConsiderationUtilityMethod
     {
-        public static void CompareHighestScore(float actionScore, ComponentType actionType, ref ActionInfo c1 )
+        public static void CompareHighestScore(float actionScore, ActionType actionType, ref ActionInfo c1 )
         {
             if (!(actionScore > c1.HighestScore)) return;
             c1.HighestScore          = actionScore;
-            c1.HighestScoreActionTag = actionType;
+            c1.HighestScoreActionType = actionType;
         }
 
         // TEMPLATE use in job.
@@ -19,15 +20,15 @@ namespace MuYin.AI.Consideration.Interface
         // {
         //     considerations[i] = c0[i];
         // }
-        public static float ScoreCompositeConsiders(NativeArray<ConsiderationBase> considerations)
-        {
-            var total = 0f;
-            for (int i = 0; i < considerations.Length; i++)
-            {
-                total += considerations[i].Score;
-            }
-            considerations.Dispose();
-            return total / considerations.Length;
-        }
+        // public static float ScoreCompositeConsiders(NativeArray<ConsiderationBase> considerations)
+        // {
+        //     var total = 0f;
+        //     for (int i = 0; i < considerations.Length; i++)
+        //     {
+        //         total += considerations[i].Score;
+        //     }
+        //     considerations.Dispose();
+        //     return total / considerations.Length;
+        // }
     }
 }

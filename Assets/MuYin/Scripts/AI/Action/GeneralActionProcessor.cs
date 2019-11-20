@@ -1,3 +1,4 @@
+using MuYin.AI.Action;
 using MuYin.AI.Components;
 using MuYin.AI.Components.FSM;
 using MuYin.AI.Systems;
@@ -63,13 +64,14 @@ namespace MuYin.AI.ActionProcessor
                 ref ActionInfo c0)
             {
                 // Put this before conditional check so SleepProcessor would get timer info before FSM shift state.
-                if (c0.ElapsedTimeSinceExecute > c0.ActionExecuteTime)
+                if (c0.ElapsedTimeSinceExecute > c0.ActionExecuteTime
+                && c0.ElapsedTimeSinceExecute > TimeUnit)
                 {
                     EndEcb.RemoveComponent<InProcessing>(index, actor);
                     EndEcb.AddComponent<OnActionEnd>(index, actor);
                 }
                 c0.ElapsedTimeSinceExecute     += DeltaTime;
-                c0.ElapsedTimeSinceApplyEffect += DeltaTime;
+                c0.ElapsedTimeSinceLastTimeApplyEffect += DeltaTime;
             }
         }
 

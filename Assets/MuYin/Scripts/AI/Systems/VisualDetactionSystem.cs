@@ -12,9 +12,8 @@ using Unity.Transforms;
 
 namespace MuYin.AI.Systems
 {
-    public class VisualDetactionSystem : JobComponentSystem
+    public class VisualDetectionSystem : JobComponentSystem
     {
-        private PhysicsDetectionUtilitySystem m_utilitySystem;
         private BuildPhysicsWorld m_buildPhysicsWorldSystem;
         private EntityQuery m_npcGroup;
         private EntityQuery m_detectorGroup;
@@ -31,18 +30,18 @@ namespace MuYin.AI.Systems
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                var VisibleTargetBufferAccessor = chunk.GetBufferAccessor(VisibleTargetType);
+                var visibleTargetBufferAccessor = chunk.GetBufferAccessor(VisibleTargetType);
                 var chunkLocalToWorld            = chunk.GetNativeArray(LocalToWorldType);
                 var chunkDetector = chunk.GetNativeArray(EntityType);
 
                 for (var i = 0; i < chunk.Count; i++)
                 {
                     var detectorEntity = chunkDetector[i];
-                    Debug.Log($"I'm entity: {detectorEntity}");
+                    //Debug.Log($"I'm entity: {detectorEntity}");
 
                     var localToWorld   = chunkLocalToWorld[i];
-                    var VisibleTarget = VisibleTargetBufferAccessor[i];
-                    VisibleTarget.Clear();
+                    var visibleTarget = visibleTargetBufferAccessor[i];
+                    visibleTarget.Clear();
                     var hits = new NativeList<int>(1, Allocator.Temp);
                     
                     // TODO 
@@ -56,8 +55,8 @@ namespace MuYin.AI.Systems
                             var detectedEntity = World.Bodies[hits[j]].Entity;
                             var detectedPos    = TranslationAccessor[detectedEntity].Value;
 
-                            var IsSelf = detectorEntity == detectedEntity;
-                            if (IsSelf) 
+                            var isSelf = detectorEntity == detectedEntity;
+                            if (isSelf) 
                                 continue;
 
                             if (!InViewCone(ref localToWorld, detectedPos, ref Setting))
@@ -66,7 +65,7 @@ namespace MuYin.AI.Systems
                             if (!Visible(ref World, localToWorld.Position, detectedPos, ref Setting))
                                 continue;
 
-                            VisibleTarget.Add(new VisibleTarget
+                            visibleTarget.Add(new VisibleTarget
                             {
                                 TargetEntity = detectedEntity
                                 // TODO Raise event?
@@ -155,7 +154,6 @@ namespace MuYin.AI.Systems
                 ComponentType.ReadOnly<LocalToWorld>(),
                 ComponentType.ReadOnly<VisibleTarget>());
 
-            m_utilitySystem = World.Active.GetOrCreateSystem<PhysicsDetectionUtilitySystem>();
             m_buildPhysicsWorldSystem = World.GetOrCreateSystem<BuildPhysicsWorld>();
         }
 

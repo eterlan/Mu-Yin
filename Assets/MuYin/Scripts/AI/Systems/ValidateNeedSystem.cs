@@ -61,6 +61,7 @@ namespace MuYin.AI.Systems
                                 throw new IndexOutOfRangeException("needKey is out of range.");
 
                             // 如果需求低于阈值，检查下个需求，否则设定needLv为当前检测等级，标记不满足需求并筛除该entity。
+                            // TODO 阈值是否需要对每个需求都自定义？
                             if (needs[i].Urgency <= ValidateValue) continue;
                             c1.CurrentLv = lv;
                             c1.Satisfied = false;

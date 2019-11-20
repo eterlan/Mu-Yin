@@ -7,7 +7,7 @@ using MuYin.AI.Components;
 namespace MuYin.AI.Editor
 {
     [CustomEditor(typeof(FieldOfViewAuthoring))]
-    public class VisualDetectionEditor : UnityEditor.Editor
+    public class FieldOfViewAuthoringEditor : UnityEditor.Editor
     {
         public void OnSceneGUI()
         {

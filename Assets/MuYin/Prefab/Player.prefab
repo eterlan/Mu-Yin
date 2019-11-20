@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 4630133108661541031}
   - component: {fileID: 3868951166974919113}
   - component: {fileID: 2009911016}
+  - component: {fileID: 1650999584}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -270,9 +271,6 @@ MonoBehaviour:
     - Name: Type
       Entry: 3
       Data: 0
-    - Name: urgency
-      Entry: 3
-      Data: 0
     - Name: AddPerSecond
       Entry: 3
       Data: 1
@@ -285,9 +283,6 @@ MonoBehaviour:
     - Name: Type
       Entry: 3
       Data: 1
-    - Name: urgency
-      Entry: 3
-      Data: 0
     - Name: AddPerSecond
       Entry: 3
       Data: 1
@@ -300,9 +295,6 @@ MonoBehaviour:
     - Name: Type
       Entry: 3
       Data: 2
-    - Name: urgency
-      Entry: 3
-      Data: 0
     - Name: AddPerSecond
       Entry: 3
       Data: 1
@@ -349,6 +341,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4523b0f322c4b489fb50d5c1bcc2af2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1650999584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255198192858513396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c5576f6149044be813d2c5538cbd8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3553613462225938103

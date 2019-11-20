@@ -58,7 +58,6 @@ namespace MuYin.GameManager
                     var c1 = Places[c];
                     var c2 = Translations[c];
                     var maxScoreIndex = -1;
-                    Debug.Log(OwnersPos.Length);
                     for (var i = 0; i < OwnersPos.Length; i++)
                     {
                         var ownerInfo = OwnersPos[i];

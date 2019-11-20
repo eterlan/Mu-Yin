@@ -9,7 +9,9 @@ namespace MuYin.AI.Systems
         private       float m_lastUpdateTime;
         private const float UpdatePeriod = 1;
 
-        struct UpdateNeedJob : IJobForEach_B<Need>
+        // TODO 不是每个需求都会一直增长，应该添加一个bool决定是否自动增长？
+        // 不用 AddPerSecond设为0即可
+        struct UpdateNeedJob : IJobForEach_B<Need>   
         {
             public void Execute(DynamicBuffer<Need> b0)
             {

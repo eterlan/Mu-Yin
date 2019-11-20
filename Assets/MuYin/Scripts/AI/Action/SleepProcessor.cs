@@ -1,6 +1,8 @@
-﻿using MuYin.AI.Components;
-using MuYin.AI.Components.ActionTag;
+﻿using MuYin.AI.Action;
+using MuYin.AI.Action.ActionTag;
+using MuYin.AI.Components;
 using MuYin.AI.Components.FSM;
+using MuYin.AI.Enum;
 using MuYin.Gameplay.Components;
 using MuYin.Gameplay.Enum;
 using MuYin.Gameplay.Systems;
@@ -128,12 +130,12 @@ namespace MuYin.AI.ActionProcessor
                 DynamicBuffer<Need> needs,
                 ref ActionInfo      c0)
             {
-                if (c0.ElapsedTimeSinceApplyEffect < 1) return;
+                if (c0.ElapsedTimeSinceLastTimeApplyEffect < 1) return;
                 // if not floor this, UpdateNeed would apply one less time.
                 c0.ElapsedTimeSinceExecute = math.floor(c0.ElapsedTimeSinceExecute);
                 
                 UpdateNeedPerSecond(ref c0, BedInfos[c0.DataKey].Restoration);
-                c0.ElapsedTimeSinceApplyEffect = 0;
+                c0.ElapsedTimeSinceLastTimeApplyEffect = 0;
                 Debug.Log("zzz...");
                 
                 void UpdateNeedPerSecond(ref ActionInfo info, int restoration)

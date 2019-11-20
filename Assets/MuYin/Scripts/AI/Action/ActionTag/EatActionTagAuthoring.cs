@@ -1,15 +1,15 @@
-﻿using Unity.Entities;
+using Unity.Entities;
 using UnityEngine;
 
-namespace MuYin.AI.Components.ActionTag
+namespace MuYin.AI.Action.ActionTag
 {
-    public struct SleepActionTag : IComponentData
+    public struct EatActionTag : IComponentData
     {
     }
 
     [DisallowMultipleComponent]
     [RequiresEntityConversion]
-    public class SleepActionTagAuthoring : MonoBehaviour, IConvertGameObjectToEntity
+    public class EatActionTagAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
